@@ -1,0 +1,20 @@
+service: daily-dragon
+
+provider:
+  name: aws
+  runtime: python3.11
+  stage: dev
+  region: us-east-1
+  environment:
+    TELEGRAM_TOKEN: ${env:TELEGRAM_TOKEN}
+
+
+
+functions:
+  post:
+    handler: handler.py
+    events:
+      - http:
+          path: daily-dragon
+          method: post
+          cors: true
