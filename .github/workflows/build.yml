@@ -5,5 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
-      - run: ls .. -la
+      - run: tree
       - run: pip install -r requirements.txt
