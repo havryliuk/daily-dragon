@@ -1,0 +1,15 @@
+Provide me a random new ${language} word with pronunciation, meanings in English and sentences to illustrate them.
+Respond in the following format:
+Word: <word> (jiǎo zi)
+Meaning: dumplings
+
+Example sentences:
+1. <sentence>
+(<pronunciation>)
+<translation>
+
+2. <sentence>
+(<pronunciation>)
+<translation>
+
+and so on
