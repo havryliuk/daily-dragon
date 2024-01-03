@@ -15,15 +15,16 @@ class DailyDragon:
 
     def get_daily_word(self):
         prompt = prompts.get_daily_word_prompt()
-        prompt = prompt.replace('${language}', self.language)
-        print(prompt)
+        prompt = prompt.format(language=self.language)
+        print(f"Language: {self.language}")
         completion = self.openai_client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": f"You are a teacher of ${self.language}."},
+                {"role": "system", "content": f"You are a teacher of {self.language}."},
                 {"role": "user", "content": f"${prompt}"}
             ]
         )
+        print(completion)
         return completion.choices[0].message.content
 
     def set_language(self, language: str):

@@ -23,7 +23,7 @@ daily_dragon = DailyDragon()
 RAINY_BABE = 'rainy_babe'
 
 
-async def daily_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def random_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = update.effective_user.username
     print(f'User {username} requested daily word')
     if username == RAINY_BABE:
@@ -35,7 +35,7 @@ async def daily_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
     
-    start_handler = CommandHandler('dailyword', daily_word)
+    start_handler = CommandHandler('random', random_word)
     application.add_handler(start_handler)
     
     application.run_polling()
