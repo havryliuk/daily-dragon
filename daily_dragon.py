@@ -1,28 +1,37 @@
 import logging
-from dotenv import load_dotenv
-import os
 
-from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
+from openai import OpenAI
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
+import prompts
 
-load_dotenv()
-TOKEN = os.getenv('TOKEN')
-if TOKEN is None:
-    raise ValueError('TOKEN not found in .env file')
+logger = logging.getLogger(__name__)
+
+LANGUAGES = {'Chinese', 'Japanese'}
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Hello! I am 每日龙!\nLauching soon!")
+class DailyDragon:
+    openai_client: OpenAI
+    language: str
 
-if __name__ == '__main__':
-    application = ApplicationBuilder().token(TOKEN).build()
-    
-    start_handler = CommandHandler('start', start)
-    application.add_handler(start_handler)
-    
-    application.run_polling()
+    def __init__(self):
+        self.openai_client = OpenAI()
+        self.language = 'Chinese'
+
+    def get_daily_word(self):
+        prompt = prompts.get_daily_word_prompt()
+        prompt = prompt.format(language=self.language)
+        logger.info(f"Language: {self.language}")
+        completion = self.openai_client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": f"You are a teacher of {self.language}."},
+                {"role": "user", "content": f"${prompt}"}
+            ]
+        )
+        logger.info(completion)
+        return completion.choices[0].message.content
+
+    def set_language(self, language: str):
+        if language not in LANGUAGES:
+            raise ValueError(f'Language {language} not supported')
+        self.language = language
