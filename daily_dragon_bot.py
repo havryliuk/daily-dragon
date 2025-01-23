@@ -5,6 +5,7 @@ import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 
+from handlers.add_word_handler import add_word_handler
 from daily_dragon import DailyDragon
 
 logging.basicConfig(
@@ -37,4 +38,6 @@ async def random_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
     application.add_handler(CommandHandler('random', random_word))
+    application.add_handler(add_word_handler())
+
     application.run_polling()
