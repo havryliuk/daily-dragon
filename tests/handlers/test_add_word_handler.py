@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock, AsyncMock
 import pytest
 from telegram.ext import ConversationHandler
 
-from handlers.add_word_handler import add_word_handler, add_word, add_pronunciation, add_translation, save_word
+from handlers.add_word_handler import add_word_handler, add_word, add_pronunciation, add_translation, save_word, cancel
 
 
 @patch("handlers.add_word_handler.ConversationHandler")
@@ -131,4 +131,18 @@ async def test_save_word_already_exists(mock_vocabulary, mock_context, mock_upda
     result = await save_word(mock_update, mock_context)
 
     mock_message.reply_text.assert_called_once_with("Word sample_word already exists in vocabulary.")
+    assert result == ConversationHandler.END
+
+
+@pytest.mark.asyncio
+@patch("handlers.add_word_handler.Update")
+@patch("handlers.add_word_handler.ContextTypes.DEFAULT_TYPE")
+async def test_cancel(mock_context, mock_update):
+    mock_message = AsyncMock()
+    mock_message.reply_text = AsyncMock()
+    mock_update.message = mock_message
+
+    result = await cancel(mock_update, mock_context)
+
+    mock_message.reply_text.assert_called_once_with("Word entry cancelled.")
     assert result == ConversationHandler.END
