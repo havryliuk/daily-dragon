@@ -12,15 +12,15 @@ logging.basicConfig(
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
-RAINY_BABE = 'rainy_babe'
+JAPANESE_USER_ID = 391819710
 
 
 async def random_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    username = update.effective_user.username
-    logger.info(f'User {username} requested random word')
+    user_id = update.effective_user.id
+    logger.info(f'User {user_id} ("{update.effective_user.username}") requested random word')
 
     daily_dragon = DailyDragon()
-    if username == RAINY_BABE:
+    if user_id == JAPANESE_USER_ID:
         daily_dragon.set_language('Japanese')
     daily_word_response = daily_dragon.get_daily_word()
     await context.bot.send_message(chat_id=update.effective_chat.id, text=daily_word_response)

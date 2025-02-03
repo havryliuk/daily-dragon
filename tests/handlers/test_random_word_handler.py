@@ -11,7 +11,7 @@ async def test_random_word_handler(mock_daily_dragon):
     mock_update = AsyncMock()
     mock_context = AsyncMock()
     mock_context.bot.send_message = AsyncMock()
-    mock_update.effective_user.username = 'rainy_babe'
+    mock_update.effective_user.id = 391819710
     mock_update.effective_chat.id = 12345
 
     mock_instance = mock_daily_dragon.return_value
