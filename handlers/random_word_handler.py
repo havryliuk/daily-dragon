@@ -27,4 +27,4 @@ async def random_word(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def random_word_handler():
-    return CommandHandler('random', random_word)
+    return CommandHandler('random_word', random_word)
