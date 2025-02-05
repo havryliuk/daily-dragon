@@ -1,0 +1,3 @@
+VOCABULARY_FILE_NAME = "examples/vocabulary.json"
+
+JAPANESE_USER_ID = 391819710

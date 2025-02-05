@@ -3,7 +3,8 @@ import logging
 from telegram import Update
 from telegram.ext import CommandHandler, ContextTypes
 
-from daily_dragon import DailyDragon
+from openai_client.daily_dragon import DailyDragon
+from handlers.constants import JAPANESE_USER_ID
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -11,8 +12,6 @@ logging.basicConfig(
 )
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
-
-JAPANESE_USER_ID = 391819710
 
 
 async def random_word(update: Update, context: ContextTypes.DEFAULT_TYPE):

@@ -14,9 +14,11 @@ mock_vocabulary = {
     }
 }
 
+
 def test_new_vocabulary():
     vocabulary = Vocabulary("")
     assert vocabulary.vocabulary == {}
+
 
 def test_save_word():
     mock_file_data = json.dumps(mock_vocabulary)
@@ -26,8 +28,10 @@ def test_save_word():
         word = Word("word3", "pronunciation3", "translation3")
         instance.save_word(word)
 
-        mock_vocabulary["word3"] = {"pronunciation":"pronunciation3", "translation":"translation3"}
+        mock_vocabulary["word3"] = {"pronunciation": "pronunciation3", "translation": "translation3"}
         assert instance.vocabulary == mock_vocabulary
+        mock_vocabulary.pop("word3")
+
 
 def test_save_word_already_exists():
     mock_file_data = json.dumps(mock_vocabulary)
@@ -42,6 +46,23 @@ def test_save_word_already_exists():
             assert instance.vocabulary == mock_vocabulary
         else:
             assert False
+
+
+def test_get_words():
+    mock_file_data = json.dumps(mock_vocabulary)
+
+    with patch("builtins.open", mock_open(read_data=mock_file_data)):
+        instance = Vocabulary("mock_file.json")
+        assert instance.get_random_words(1)[0] in ["word1", "word2"]
+
+
+def test_get_words_all():
+    mock_file_data = json.dumps(mock_vocabulary)
+
+    with patch("builtins.open", mock_open(read_data=mock_file_data)):
+        instance = Vocabulary("mock_file.json")
+        assert instance.get_random_words(3) == ["word1", "word2"]
+
 
 def test_word_str():
     word = Word("word", "pronunciation", "translation")
