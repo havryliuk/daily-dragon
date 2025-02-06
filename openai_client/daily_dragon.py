@@ -1,5 +1,6 @@
 import json
 import logging
+from json import JSONDecodeError
 from typing import List
 
 from openai import OpenAI
@@ -50,6 +51,7 @@ class DailyDragon:
     def mark_translations(self, translations: List) -> List:
         prompt = prompts.get_mark_translations_prompt()
         prompt = prompt.format(language=self.language, translations=translations)
+        logging.info("Marking translations...")
         completion = self.openai_client.chat.completions.create(
             model=CHAT_GPT_MODEL,
             messages=[
@@ -57,7 +59,14 @@ class DailyDragon:
                 {"role": "user", "content": f"{prompt}"}
             ]
         )
-        marked_translations = json.loads(completion.choices[0].message.content)
+        response = completion.choices[0].message.content
+        try:
+            marked_translations = json.loads(response)
+        except JSONDecodeError:
+            logging.error(f"Failed to decode JSON: {response}")
+            raise
+
+        logging.info(f"Marked translations: {marked_translations}")
         return marked_translations
 
     def set_language(self, language: str):

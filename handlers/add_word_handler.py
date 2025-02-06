@@ -39,7 +39,7 @@ async def save_word(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['translation'] = update.message.text
     word = Word(context.user_data['word'], context.user_data['pronunciation'], context.user_data['translation'])
 
-    vocabulary = Vocabulary(VOCABULARY_FILE_NAME)
+    vocabulary = Vocabulary(update.effective_user.id)
     try:
         vocabulary.save_word(word)
         reply = f"Word saved: {word}"

@@ -3,12 +3,14 @@ import json
 import logging
 import random
 
+from handlers.constants import VOCABULARY_FILE_NAME
+
 
 class Vocabulary:
 
-    def __init__(self, file_name: str):
+    def __init__(self, user_id: id):
         self.vocabulary = dict()
-        self.vocabulary_file_name = file_name
+        self.vocabulary_file_name = VOCABULARY_FILE_NAME.format(user_id=user_id)
 
     def save_word(self, word):
         # read the vocabulary file once more because it may have changed

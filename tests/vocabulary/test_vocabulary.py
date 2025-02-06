@@ -16,7 +16,7 @@ mock_vocabulary = {
 
 
 def test_new_vocabulary():
-    vocabulary = Vocabulary("")
+    vocabulary = Vocabulary(1)
     assert vocabulary.vocabulary == {}
 
 

@@ -5,7 +5,7 @@ from telegram import Update
 from telegram.ext import ConversationHandler, CommandHandler, ContextTypes, MessageHandler, filters
 
 from openai_client.daily_dragon import DailyDragon
-from handlers.constants import VOCABULARY_FILE_NAME, JAPANESE_USER_ID
+from handlers.constants import JAPANESE_USER_ID
 from vocabulary.vocabulary import Vocabulary
 
 WORDS_COUNT_FOR_PRACTICE = 5
@@ -31,7 +31,7 @@ async def start_practice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     logging.info(f'User {user_id} ("{update.effective_user.username}") started practice')
 
-    vocabulary = Vocabulary(VOCABULARY_FILE_NAME)
+    vocabulary = Vocabulary(user_id)
     words = vocabulary.get_random_words(WORDS_COUNT_FOR_PRACTICE)
 
     daily_dragon = DailyDragon()
@@ -72,7 +72,7 @@ async def get_translations(update: Update, context: ContextTypes.DEFAULT_TYPE):
         message_text = f"""
 Practice completed. Here are your translations:
 
-{'\n'.join(f"{item['sentence']} -> {item['translation']}\nMark: {item['mark']}\nComment: {item['comment']}\n" for item in marked_translations)}        
+{'\n'.join(f"{item['sentence']} -> {item['translation']}\nMark: {item['mark']}\nComment: {item['comment']}\n" for item in marked_translations)}
 You have practiced the following words: {", ".join(item['word'] for item in sentences)}
 Average accuracy: {average_mark:.2f}
         """
