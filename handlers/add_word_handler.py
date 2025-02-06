@@ -1,11 +1,10 @@
 from telegram import Update
 from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, filters, ContextTypes
 
+from handlers.constants import VOCABULARY_FILE_NAME
 from vocabulary.vocabulary import Word, Vocabulary
 
 word, pronunciation, translation = range(3)
-
-VOCABULARY_FILE_NAME = "examples/vocabulary.json"
 
 def add_word_handler():
     return ConversationHandler(
@@ -40,7 +39,7 @@ async def save_word(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['translation'] = update.message.text
     word = Word(context.user_data['word'], context.user_data['pronunciation'], context.user_data['translation'])
 
-    vocabulary = Vocabulary(VOCABULARY_FILE_NAME)
+    vocabulary = Vocabulary(update.effective_user.id)
     try:
         vocabulary.save_word(word)
         reply = f"Word saved: {word}"

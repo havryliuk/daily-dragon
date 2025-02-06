@@ -1,12 +1,16 @@
+import itertools
 import json
 import logging
+import random
+
+from handlers.constants import VOCABULARY_FILE_NAME
 
 
 class Vocabulary:
 
-    def __init__(self, file_name: str):
+    def __init__(self, user_id: id):
         self.vocabulary = dict()
-        self.vocabulary_file_name = file_name
+        self.vocabulary_file_name = VOCABULARY_FILE_NAME.format(user_id=user_id)
 
     def save_word(self, word):
         # read the vocabulary file once more because it may have changed
@@ -25,6 +29,19 @@ class Vocabulary:
         with open(self.vocabulary_file_name, mode='w', encoding='utf-8') as file:
             json.dump(self.vocabulary, file, ensure_ascii=False, indent=4)
         logging.info(f"Word '{word}' saved to vocabulary.")
+
+    def get_random_words(self, count: int):
+        with open(self.vocabulary_file_name, 'r', encoding='utf-8') as file:
+            self.vocabulary = json.load(file)
+
+        iterator = iter(self.vocabulary)
+        try:
+            words = random.sample(list(itertools.islice(iterator, count * 10)), count)
+        except ValueError:
+            words = list(self.vocabulary.keys())
+
+        logging.info(f"Selected random words: {words}")
+        return words
 
 
 class Word:
