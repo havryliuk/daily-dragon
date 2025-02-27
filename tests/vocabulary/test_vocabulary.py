@@ -28,9 +28,10 @@ def test_save_word():
         word = Word("word3", "pronunciation3", "translation3")
         instance.save_word(word)
 
-        mock_vocabulary["word3"] = {"pronunciation": "pronunciation3", "translation": "translation3"}
-        assert instance.vocabulary == mock_vocabulary
-        mock_vocabulary.pop("word3")
+        added_word = instance.vocabulary["word3"]
+        assert added_word["pronunciation"] == "pronunciation3"
+        assert added_word["translation"] == "translation3"
+        assert added_word["added_on"] > 0
 
 
 def test_save_word_already_exists():

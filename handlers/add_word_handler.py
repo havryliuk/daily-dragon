@@ -1,7 +1,6 @@
 from telegram import Update
 from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, filters, ContextTypes
 
-from handlers.constants import VOCABULARY_FILE_NAME
 from vocabulary.vocabulary import Word, Vocabulary
 
 word, pronunciation, translation = range(3)
