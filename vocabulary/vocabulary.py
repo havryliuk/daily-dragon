@@ -2,6 +2,7 @@ import itertools
 import json
 import logging
 import random
+import time
 
 from handlers.constants import VOCABULARY_FILE_NAME
 
@@ -23,7 +24,8 @@ class Vocabulary:
             raise ValueError(f"Word {word.word} already exists in vocabulary.")
         self.vocabulary[word.word] = {
             'pronunciation': word.pronunciation,
-            'translation': word.translation
+            'translation': word.translation,
+            'added_on': int(time.time())
         }
 
         with open(self.vocabulary_file_name, mode='w', encoding='utf-8') as file:
@@ -43,12 +45,18 @@ class Vocabulary:
         logging.info(f"Selected random words: {words}")
         return words
 
+    def get_all_words(self):
+        with open(self.vocabulary_file_name, 'r', encoding='utf-8') as file:
+            self.vocabulary = json.load(file)
+        return self.vocabulary
+
 
 class Word:
     def __init__(self, word, pronunciation, translation):
         self.word = word
         self.pronunciation = pronunciation
         self.translation = translation
+        self.added_on = int(time.time())
 
     def __str__(self):
         return f"{self.word} ({self.pronunciation}) - {self.translation}"

@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, AsyncMock, patch
 
 import pytest
 from telegram import User, Message, Update
-from telegram.ext import ContextTypes, ConversationHandler, CommandHandler, MessageHandler
+from telegram.ext import ContextTypes, ConversationHandler, MessageHandler
 
 from handlers.practice_handler import format_sentence_to_underline, start_practice, WORDS_COUNT_FOR_PRACTICE, \
     get_translations, practice_handler
