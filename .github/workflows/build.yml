@@ -1,5 +1,7 @@
 name: Build Daily Dragon
+
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,3 +12,15 @@ jobs:
           python-version: 3.12
       - run: pip install -r requirements.txt
       - run: pytest --cov=.
+
+      - name: Prepare AWS Lambda Layer
+        env:
+          layer-folder: layer/python
+        run: |
+          mkdir -p $layer-folder
+          pip install -r requirements.txt -t $layer-folder
+          cp -r handlers openai_client prompts vocabulary $layer_folder/
+          tree $layer-folder
+          cd layer
+          zip -r ../layer.zip .
+          cd ..

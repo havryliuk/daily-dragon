@@ -8,7 +8,7 @@ from openai_client.daily_dragon import DailyDragon
 from handlers.constants import JAPANESE_USER_ID
 from vocabulary.vocabulary import Vocabulary
 
-WORDS_COUNT_FOR_PRACTICE = 5
+WORDS_COUNT_FOR_PRACTICE = 10
 
 translation = range(1)
 
@@ -68,7 +68,7 @@ async def get_translations(update: Update, context: ContextTypes.DEFAULT_TYPE):
         daily_dragon = DailyDragon()
         marked_translations = daily_dragon.mark_translations(sentences)
 
-        average_mark = sum(item['mark'] for item in marked_translations) / len(marked_translations)
+        average_mark = sum(int(item['mark']) for item in marked_translations) / len(marked_translations)
         message_text = f"""
 Practice completed. Here are your translations:
 

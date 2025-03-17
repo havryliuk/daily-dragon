@@ -5,4 +5,8 @@ venv
 .venv
 .env
 
+# packages for lambda layer
+python
+python.zip
+
 .coverage

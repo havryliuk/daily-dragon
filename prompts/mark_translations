@@ -2,5 +2,5 @@ Provided these sentences and their translations to {language} for a word:
 {translations}
 mark the translations from 0 to 10. the main criteria is whether the correct word was used for the underlined word. add comment if necessary
 add two more fields to each object: "mark": 10 having the mark and "comment": "comment"
-example (return only json as text without json formatting tag)!:
+example (return only json as text without json formatting tag, make sure properties are enclosed in double quotes)!:
 [{{ "sentence": "The hotel is in the city center.", "translation": "酒店在市中心", "word": "市中心", "mark": "mark", "comment": "comment" }}]
