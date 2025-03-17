@@ -14,13 +14,11 @@ jobs:
       - run: pytest --cov=.
 
       - name: Prepare AWS Lambda Layer
-        env:
-          layer-folder: layer/python
         run: |
-          mkdir -p $layer-folder
-          pip install -r requirements.txt -t $layer-folder
-          cp -r handlers openai_client prompts vocabulary $layer_folder/
-          tree $layer-folder
+          mkdir -p layer/python
+          pip install -r requirements.txt -t layer/python
+          cp -r handlers openai_client prompts vocabulary layer/python/
+          tree layer/python
           cd layer
           zip -r ../layer.zip .
           cd ..
