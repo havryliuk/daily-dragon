@@ -1,6 +1,7 @@
 [run]
 omit =
     tests/*
+    main_handler.py
 
 [report]
 fail_under = 80

@@ -1,6 +1,11 @@
+import json
 from unittest.mock import patch, MagicMock
 
+import pytest
+from openai import OpenAI
+
 from openai_client.daily_dragon import DailyDragon
+
 
 @patch('openai_client.daily_dragon.OpenAI')
 def test_init(openai_mock):
@@ -38,6 +43,7 @@ def test_get_daily_word(mock_openai_class, prompts_mock):
     )
     assert result == 'word'
 
+
 @patch('openai_client.daily_dragon.prompts')
 @patch('openai_client.daily_dragon.OpenAI')
 def test_get_sentences_for_practice(mock_openai_class, prompts_mock):
@@ -61,3 +67,46 @@ def test_get_sentences_for_practice(mock_openai_class, prompts_mock):
         ]
     )
     assert result == {'sentences': [{'sentence': 's', 'word': 'w'}]}
+
+
+@patch('openai_client.daily_dragon.OpenAI')
+def test_mark_translations_success(mock_openai_class):
+    """Test mark_translations method with a valid OpenAI response."""
+    mock_openai_instance = MagicMock()
+    mock_openai_class.return_value = mock_openai_instance
+
+    instance = DailyDragon()
+
+    translations = ["apple", "banana", "cherry"]
+    mock_response_data = [{"word": "apple", "correct": True}, {"word": "banana", "correct": False}]
+    mock_response_json = json.dumps(mock_response_data)
+
+    mock_completion = MagicMock()
+    mock_completion.choices = [MagicMock()]
+    mock_completion.choices[0].message.content = mock_response_json
+    mock_openai_instance.chat.completions.create.return_value = mock_completion
+
+    result = instance.mark_translations(translations)
+
+    assert result == mock_response_data
+    mock_openai_instance.chat.completions.create.assert_called_once()
+
+
+@patch('openai_client.daily_dragon.OpenAI')
+def test_mark_translations_invalid_json(mock_openai_class):
+    """Test mark_translations when OpenAI returns invalid JSON."""
+    mock_openai_instance = MagicMock()
+    mock_openai_class.return_value = mock_openai_instance
+
+    instance = DailyDragon()
+
+    translations = ["apple", "banana"]
+    mock_response_invalid_json = "invalid json response"
+
+    mock_completion = MagicMock()
+    mock_completion.choices = [MagicMock()]
+    mock_completion.choices[0].message.content = mock_response_invalid_json
+    mock_openai_instance.chat.completions.create.return_value = mock_completion
+
+    with pytest.raises(json.JSONDecodeError):
+        instance.mark_translations(translations)
