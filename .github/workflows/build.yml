@@ -80,7 +80,6 @@ jobs:
             --query LayerVersionArn --output text)
           echo "Published Layer ARN: $LAYER_VERSION_ARN"
           ENCODED_LAYER_ARN=$(echo -n "$LAYER_VERSION_ARN" | base64)
-          echo "Encoded Layer ARN: $ENCODED_LAYER_ARN"
           echo "layer_arn=$ENCODED_LAYER_ARN" >> $GITHUB_OUTPUT
 
   update-lambda-layer:
