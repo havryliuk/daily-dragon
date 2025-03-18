@@ -78,7 +78,9 @@ jobs:
             --zip-file fileb://dependencies_layer.zip \
             --compatible-runtimes python3.12 \
             --query LayerVersionArn --output text)
+          echo "Published Layer ARN: $LAYER_VERSION_ARN"
           ENCODED_LAYER_ARN=$(echo -n "$LAYER_VERSION_ARN" | base64)
+          echo "Encoded Layer ARN: $ENCODED_LAYER_ARN"
           echo "layer_arn=$ENCODED_LAYER_ARN" >> $GITHUB_OUTPUT
 
   update-lambda-layer:
@@ -95,6 +97,7 @@ jobs:
       - name: Attach Layer to Lambda
         run: |
           DECODED_LAYER_ARN=$(echo -n "${{ needs.deploy-layer.outputs.layer_arn }}" | base64 --decode)
+          echo "Decoded layer ARN: $DECODED_LAYER_ARN"
           aws lambda update-function-configuration \
             --function-name daily-dragon \
             --layers "$DECODED_LAYER_ARN"
