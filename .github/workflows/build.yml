@@ -69,16 +69,27 @@ jobs:
 
       - name: Deploy Lambda Layer
         run: |
-          LAYER_VERSION=$(aws lambda publish-layer-version \
+          LAYER_VERSION_ARN=$(aws lambda publish-layer-version \
             --layer-name daily-dragon-libraries \
             --description "Dependencies for Daily Dragon Lambda" \
             --zip-file fileb://dependencies_layer.zip \
             --compatible-runtimes python3.12 \
-            --output text --query Version)
-          echo "LAYER_VERSION=$LAYER_VERSION" >> $GITHUB_ENV
+            --query LayerVersionArn --output text)
+          echo "LAYER_VERSION_ARN=$LAYER_VERSION_ARN" >> $GITHUB_ENV
 
-      - name: Update Lambda to Use Layer
+  update-lambda-layer:
+    needs: [deploy, deploy-layer]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Attach Layer to Lambda
         run: |
           aws lambda update-function-configuration \
             --function-name daily-dragon \
-            --layers $(aws lambda list-layers --query "Layers[?LayerName=='daily-dragon-dependencies'].LatestMatchingVersion.LayerVersionArn" --output text)
+            --layers $LAYER_VERSION_ARN
