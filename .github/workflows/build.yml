@@ -1,6 +1,6 @@
 name: Deploy Daily Dragon
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
@@ -78,10 +78,11 @@ jobs:
             --zip-file fileb://dependencies_layer.zip \
             --compatible-runtimes python3.12 \
             --query LayerVersionArn --output text)
-          echo "layer_arn=$LAYER_VERSION_ARN" >> $GITHUB_OUTPUT
+          ENCODED_LAYER_ARN=$(echo -n "$LAYER_VERSION_ARN" | base64)
+          echo "layer_arn=$ENCODED_LAYER_ARN" >> $GITHUB_OUTPUT
 
   update-lambda-layer:
-    needs: [deploy, deploy-layer]
+    needs: [ deploy, deploy-layer ]
     runs-on: ubuntu-latest
     steps:
       - name: Set up AWS CLI
@@ -93,6 +94,7 @@ jobs:
 
       - name: Attach Layer to Lambda
         run: |
+          DECODED_LAYER_ARN=$(echo -n "${{ needs.deploy-layer.outputs.layer_arn }}" | base64 --decode)
           aws lambda update-function-configuration \
             --function-name daily-dragon \
-            --layers ${{ needs.deploy-layer.outputs.layer_arn }}
+            --layers "$DECODED_LAYER_ARN"
