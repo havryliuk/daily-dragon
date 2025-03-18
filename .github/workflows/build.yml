@@ -50,6 +50,8 @@ jobs:
   deploy-layer:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      layer_arn: ${{ steps.deploy_layer.outputs.layer_arn }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -68,6 +70,7 @@ jobs:
           zip -r dependencies_layer.zip python/
 
       - name: Deploy Lambda Layer
+        id: deploy_layer
         run: |
           LAYER_VERSION_ARN=$(aws lambda publish-layer-version \
             --layer-name daily-dragon-libraries \
@@ -75,7 +78,7 @@ jobs:
             --zip-file fileb://dependencies_layer.zip \
             --compatible-runtimes python3.12 \
             --query LayerVersionArn --output text)
-          echo "LAYER_VERSION_ARN=$LAYER_VERSION_ARN" >> $GITHUB_ENV
+          echo "layer_arn=$LAYER_VERSION_ARN" >> $GITHUB_OUTPUT
 
   update-lambda-layer:
     needs: [deploy, deploy-layer]
@@ -92,4 +95,4 @@ jobs:
         run: |
           aws lambda update-function-configuration \
             --function-name daily-dragon \
-            --layers $LAYER_VERSION_ARN
+            --layers ${{ needs.deploy-layer.outputs.layer_arn }}
