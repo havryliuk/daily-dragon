@@ -78,7 +78,6 @@ jobs:
             --zip-file fileb://dependencies_layer.zip \
             --compatible-runtimes python3.12 \
             --query LayerVersionArn --output text)
-          echo "Published Layer ARN: $LAYER_VERSION_ARN"
           ENCODED_LAYER_ARN=$(echo -n "$LAYER_VERSION_ARN" | base64)
           echo "layer_arn=$ENCODED_LAYER_ARN" >> $GITHUB_OUTPUT
 
