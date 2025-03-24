@@ -1,1 +1,7 @@
 requests
+boto3
+
+aws-cdk-lib
+constructs
+aws-cdk.aws_lambda
+aws-cdk.aws_apigateway
