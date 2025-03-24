@@ -25,4 +25,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy AWS stack
-        uses: cdk deploy
+        run: cdk deploy
