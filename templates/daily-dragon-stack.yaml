@@ -1,0 +1,23 @@
+Description: Daily Dragon Stack
+Resources:
+  DailyDragonAPIGateway:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: daily-dragon-api
+  DailyDragonLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code: 
+        Handler: daily_dragon_handler.lambda_handler
+        Runtime: python3.12
+  DailyDragonS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: daily-dragon-bucket
+    DeletionPolicy: Retain
+
+Outputs:
+  ApiGatewayInvokeURL:
+    Description: "Invoke URL for the API Gateway"
+    Value: !Sub "https://${DailyDragonAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+      
