@@ -32,6 +32,8 @@ Resources:
   DailyDragonLambda:
     Type: AWS::Lambda::Function
     Code:
+      S3Bucket: !Ref DailyDragonS3Bucket
+      S3Key: !Sub "${DailyDragonS3Bucket}/daily-dragon.zip"
     Role:
       Role: !GetAtt DailyDragonLambdaExecutionRole.Arn
     Properties:
