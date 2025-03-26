@@ -46,15 +46,9 @@ Resources:
         !GetAtt DailyDragonLambdaExecutionRole.Arn
       Code:
         S3Bucket: !Ref DailyDragonS3Bucket
-        S3Key: !Sub "${DailyDragonS3Bucket}/daily-dragon.zip"
+        S3Key: !Sub "daily-dragon-bucket/daily-dragon.zip"
       Handler: daily_dragon_handler.lambda_handler
       Runtime: python3.12
-
-  DailyDragonS3Bucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: daily-dragon-bucket
-    DeletionPolicy: Retain
 
 Outputs:
   ApiGatewayInvokeURL:

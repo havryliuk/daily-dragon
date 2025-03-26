@@ -7,6 +7,25 @@ env:
   S3_BUCKET_NAME: daily-dragon-bucket
 
 jobs:
+  create-s3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy stack with S3 bucket
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: DailyDragonS3Stack
+          template: templates/s3.yaml
+
   build-and-release:
     runs-on: ubuntu-latest
     steps:
@@ -56,4 +75,4 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: DailyDragonStack
-          template: templates/daily-dragon-stack.yaml
+          template: templates/main-stack.yaml

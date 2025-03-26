@@ -1,0 +1,6 @@
+Resources:
+  DailyDragonS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: daily-dragon-bucket
+    DeletionPolicy: Retain
