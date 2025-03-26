@@ -2,8 +2,12 @@ name: Deploy Daily Dragon
 
 on: [ push ]
 
+env:
+  AWS_REGION: us-east-1
+  S3_BUCKET_NAME: daily-dragon-bucket
+
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -15,10 +19,23 @@ jobs:
           python-version: 3.12
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          cd src
+          pip install -r requirements.txt
 
       #- name: Run tests
       #  run: pytest --cov=.
+
+      - name: Package source code
+        run: |
+          cd src
+          zip -r ../daily-dragon.zip .
+
+      - name: Upload source code to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: aws s3 cp daily-dragon.zip s3://$S3_BUCKET_NAME/daily-dragon.zip --region $AWS_REGION
   
   deploy:
     runs-on: ubuntu-latest

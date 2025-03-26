@@ -1,4 +1,5 @@
 Description: Daily Dragon Stack
+
 Resources:
   DailyDragonLambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -31,11 +32,13 @@ Resources:
                 Action:
                   - "lambda:GetLayerVersion"
                 Resource: "arn:aws:lambda:*:*:layer:*"
+
   DailyDragonAPIGateway:
     Type: AWS::ApiGatewayV2::Api
     Properties:
       Name: daily-dragon-api
       ProtocolType: HTTP
+
   DailyDragonLambda:
     Type: AWS::Lambda::Function
     Properties:
@@ -46,6 +49,7 @@ Resources:
         S3Key: !Sub "${DailyDragonS3Bucket}/daily-dragon.zip"
       Handler: daily_dragon_handler.lambda_handler
       Runtime: python3.12
+
   DailyDragonS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
