@@ -1,11 +1,39 @@
 Description: Daily Dragon Stack
 Resources:
+  DailyDragonLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Policies:
+        - PolicyName: DailyDragonLambdaPolicy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "arn:aws:logs:*:*:*"
+              - Effect: Allow
+                Action:
+                  - "s3:GetObject"
+                  - "s3:PutObject"
+                  - "s3:ListBucket"
+                Resource:
+                  - !Sub "arn:aws:s3:::${DailyDragonS3Bucket}/*"
+              - Effect: Allow
+                Action:
+                  - "lambda:GetLayerVersion"
+                Resource: "arn:aws:lambda:*:*:layer:*"
   DailyDragonAPIGateway:
     Type: AWS::ApiGatewayV2::Api
     Properties:
       Name: daily-dragon-api
+      ProtocolType: HTTP
   DailyDragonLambda:
     Type: AWS::Lambda::Function
+    Code:
+    Role:
+      Role: !GetAtt DailyDragonLambdaExecutionRole.Arn
     Properties:
       Handler: daily_dragon_handler.lambda_handler
       Runtime: python3.12
