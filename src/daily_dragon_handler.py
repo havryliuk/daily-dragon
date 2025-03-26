@@ -6,7 +6,7 @@ import requests
 
 
 def get_secret(secret_name: str) -> dict:
-    region_name = "us-est-1"
+    region_name = "us-east-1"
 
     session = boto3.session.Session()
     client = session.client(

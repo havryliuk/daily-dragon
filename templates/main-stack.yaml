@@ -50,8 +50,35 @@ Resources:
       Handler: daily_dragon_handler.lambda_handler
       Runtime: python3.12
 
+  DailyDragonLambdaIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref DailyDragonAPIGateway
+      IntegrationType: AWS_PROXY
+      IntegrationUri: arn:aws:apigateway:region:lambda:path/2015-03-31/functions/arn:aws:lambda:region:account-id:function:DailyDragonLambda/invocations
+      PayloadFormatVersion: '2.0'
+
+  DailyDragonApiRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref DailyDragonAPIGateway
+      RouteKey: 'ANY /{proxy+}'
+      Target: !Sub 'integrations/${DailyDragonLambdaIntegration}'
+
+    DailyDragonApiDeployment:
+      Type: AWS::ApiGatewayV2::Deployment
+      Properties:
+        ApiId: !Ref DailyDragonAPIGateway
+
+    DailyDragonApiStage:
+      Type: AWS::ApiGatewayV2::Stage
+      Properties:
+        ApiId: !Ref DailyDragonAPIGateway
+        AutoDeploy: true
+        StageName: dev
+
 Outputs:
   ApiGatewayInvokeURL:
     Description: "Invoke URL for the API Gateway"
-    Value: !Sub "https://${DailyDragonAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${DailyDragonAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/dev/"
       
