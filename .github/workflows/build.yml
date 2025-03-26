@@ -26,7 +26,7 @@ jobs:
         run: |
           CHANGESET=$(aws cloudformation create-change-set \
           --stack-name ${{ env.S3_STACK_NAME }} \
-          --template-body file://template.yaml \
+          --template-body file://templates/s3.yaml \
           --change-set-name my-change-set)
 
       - name: Describe change set
