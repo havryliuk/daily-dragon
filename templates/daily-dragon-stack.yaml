@@ -31,9 +31,9 @@ Resources:
       ProtocolType: HTTP
   DailyDragonLambda:
     Type: AWS::Lambda::Function
-    Role:
-      Role: !GetAtt DailyDragonLambdaExecutionRole.Arn
     Properties:
+      Role:
+        !GetAtt DailyDragonLambdaExecutionRole.Arn
       Code:
         S3Bucket: !Ref DailyDragonS3Bucket
         S3Key: !Sub "${DailyDragonS3Bucket}/daily-dragon.zip"
