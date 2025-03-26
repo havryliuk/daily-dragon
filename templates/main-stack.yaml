@@ -27,7 +27,7 @@ Resources:
                   - "s3:PutObject"
                   - "s3:ListBucket"
                 Resource:
-                  - !Sub "arn:aws:s3:::${DailyDragonS3Bucket}/*"
+                  - !Sub "arn:aws:s3:::daily-dragon-bucket/*"
               - Effect: Allow
                 Action:
                   - "lambda:GetLayerVersion"
@@ -45,8 +45,8 @@ Resources:
       Role:
         !GetAtt DailyDragonLambdaExecutionRole.Arn
       Code:
-        S3Bucket: !Ref DailyDragonS3Bucket
-        S3Key: !Sub "daily-dragon-bucket/daily-dragon.zip"
+        S3Bucket: "daily-dragon-bucket"
+        S3Key: "daily-dragon.zip"
       Handler: daily_dragon_handler.lambda_handler
       Runtime: python3.12
 
