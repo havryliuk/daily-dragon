@@ -8,6 +8,8 @@ env:
 
 jobs:
   create-s3:
+    env:
+      S3_STACK_NAME: DailyDragonS3Stack
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,11 +22,34 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy stack with S3 bucket
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: DailyDragonS3Stack
-          template: templates/s3.yaml
+      - name: Create CloudFormation change set
+        run: |
+          CHANGESET=$(aws cloudformation create-change-set \
+          --stack-name ${{ env.S3_STACK_NAME }} \
+          --template-body file://template.yaml \
+          --change-set-name my-change-set)
+
+      - name: Describe change set
+        run: |
+          CHANGESET_DESCRIPTION=$(aws cloudformation describe-change-set \
+            --stack-name ${{ env.S3_STACK_NAME }} \
+            --change-set-name my-change-set)
+
+        id: changeset
+        continue-on-error: true
+
+      - name: Check if change set has changes
+        if: steps.changeset.outcome == 'success'
+        run: |
+          if [[ "$CHANGESET_DESCRIPTION" == *"No changes"* ]]; then
+            echo "No changes detected. Skipping deployment."
+            exit 0
+          else
+            echo "Changes detected. Deploying stack."
+            aws cloudformation execute-change-set \
+              --stack-name ${{ env.S3_STACK_NAME }} \
+              --change-set-name my-change-set
+          fi
 
   build-and-release:
     runs-on: ubuntu-latest
