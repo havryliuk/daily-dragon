@@ -1,3 +1,7 @@
+# libraries to package for lambda layer
+src/python
+src/daily-dragon-libs.zip
+
 .idea
 *.iml
 

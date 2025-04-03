@@ -40,7 +40,7 @@ def daily_dragon_handler(event, context):
         user_id = body["message"]["from"]["id"]
         user_message = body["message"].get("text", "")
 
-        bot_response = f"User '{username}' (user ID: {user_id}) wrote: {user_message}"
+        bot_response = f"用户 '{username}' （用户 ID: {user_id}） 写道: {user_message}"
 
         response = requests.post(TELEGRAM_API_URL, json={
             "chat_id": chat_id,
