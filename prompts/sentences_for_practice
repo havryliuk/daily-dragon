@@ -1,8 +1,0 @@
-Give me sentences to practice translation from English to {language}.
-Here are the words to use in the sentences: {words}.
-Generate one sentence for each word. Don't use the same word in multiple sentences.
-Enclose the translated English words in angle brackets.
-The example sentences must be in English!
-
-Example:
-{{"sentences": [{{"word": "运动", "sentence": "I like to <exercise> every day."}}, {{"word": "学习", "sentence": "I <study> Chinese at school."}}]}}
