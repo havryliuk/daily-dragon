@@ -1,6 +1,6 @@
 from unittest.mock import patch, MagicMock
 
-from openai_client.daily_dragon import DailyDragon
+from daily_dragon.openai_client import DailyDragon
 
 @patch('openai_client.daily_dragon.OpenAI')
 def test_init(openai_mock):

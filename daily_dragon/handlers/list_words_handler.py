@@ -3,7 +3,7 @@ import logging
 from telegram import Update
 from telegram.ext import CommandHandler, ContextTypes
 
-from vocabulary.vocabulary import Vocabulary
+from daily_dragon.vocabulary.vocabulary import Vocabulary
 
 WORDS_TO_RETURN = 10
 

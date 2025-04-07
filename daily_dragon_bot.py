@@ -3,11 +3,11 @@ import os
 
 from telegram.ext import ApplicationBuilder
 
-from handlers.add_word_handler import add_word_handler
-from handlers.error_handler import error_handler
-from handlers.list_words_handler import list_words_handler
-from handlers.practice_handler import practice_handler
-from handlers.random_word_handler import random_word_handler
+from daily_dragon.handlers import add_word_handler
+from daily_dragon.handlers import error_handler
+from daily_dragon.handlers import list_words_handler
+from daily_dragon.handlers import practice_handler
+from daily_dragon.handlers import random_word_handler
 
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')

@@ -3,8 +3,8 @@ import logging
 from telegram import Update
 from telegram.ext import CommandHandler, ContextTypes
 
-from openai_client.daily_dragon import DailyDragon
-from handlers.constants import JAPANESE_USER_ID
+from daily_dragon.openai_client.daily_dragon import DailyDragon
+from daily_dragon.handlers.constants import JAPANESE_USER_ID
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

@@ -4,10 +4,10 @@ import pytest
 from telegram import User, Message, Update
 from telegram.ext import ContextTypes, ConversationHandler, MessageHandler
 
-from handlers.practice_handler import format_sentence_to_underline, start_practice, WORDS_COUNT_FOR_PRACTICE, \
+from daily_dragon.handlers import format_sentence_to_underline, start_practice, WORDS_COUNT_FOR_PRACTICE, \
     get_translations, practice_handler
-from openai_client.daily_dragon import DailyDragon
-from vocabulary.vocabulary import Vocabulary
+from daily_dragon.openai_client import DailyDragon
+from daily_dragon.vocabulary import Vocabulary
 
 
 def test_format_sentence_to_underline():

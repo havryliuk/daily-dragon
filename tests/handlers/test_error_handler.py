@@ -4,7 +4,7 @@ import pytest
 from telegram import Update, Message, User
 from telegram.ext import ConversationHandler
 
-from handlers.error_handler import error_handler
+from daily_dragon.handlers import error_handler
 
 
 @pytest.mark.asyncio

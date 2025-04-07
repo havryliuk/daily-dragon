@@ -1,3 +1,6 @@
+# installed packages for lambda layer
+python
+
 .idea
 *.iml
 

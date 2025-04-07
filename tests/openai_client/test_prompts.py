@@ -1,4 +1,4 @@
-from openai_client.prompts import get_daily_word_prompt, get_sentences_for_practice_prompt, get_mark_translations_prompt
+from daily_dragon.openai_client import get_daily_word_prompt, get_sentences_for_practice_prompt, get_mark_translations_prompt
 
 
 def test_get_daily_prompt():

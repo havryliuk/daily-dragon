@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch, mock_open
 
-from vocabulary.vocabulary import Vocabulary, Word
+from daily_dragon.vocabulary import Vocabulary, Word
 
 mock_vocabulary = {
     "word1": {

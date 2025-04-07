@@ -1,11 +1,9 @@
 from unittest.mock import MagicMock, patch, AsyncMock
 
 import pytest
-from telegram import Update, User
-from telegram.ext import ContextTypes
 
-from handlers.list_words_handler import list_words
-from vocabulary.vocabulary import Vocabulary
+from daily_dragon.handlers import list_words
+from daily_dragon.vocabulary import Vocabulary
 
 
 @pytest.mark.asyncio

@@ -1,4 +1,4 @@
-from vocabulary.vocabulary import Vocabulary
+from daily_dragon.vocabulary import Vocabulary
 
 
 def get_words_from_vocabulary(user_id):

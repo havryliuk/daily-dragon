@@ -5,3 +5,6 @@ openai
 pytest
 pytest-cov
 pytest-asyncio
+
+# for lambda
+boto3

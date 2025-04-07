@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from handlers.random_word_handler import random_word
+from daily_dragon.handlers import random_word
 
 
 @pytest.mark.asyncio

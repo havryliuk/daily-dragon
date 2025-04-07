@@ -4,7 +4,7 @@ import logging
 import random
 import time
 
-from handlers.constants import VOCABULARY_FILE_NAME
+from daily_dragon.handlers.constants import VOCABULARY_FILE_NAME
 
 
 class Vocabulary:

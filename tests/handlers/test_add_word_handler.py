@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock, AsyncMock
 import pytest
 from telegram.ext import ConversationHandler
 
-from handlers.add_word_handler import add_word_handler, add_word, add_pronunciation, add_translation, save_word, cancel
+from daily_dragon.handlers import add_word_handler, add_word, add_pronunciation, add_translation, save_word, cancel
 
 
 @patch("handlers.add_word_handler.ConversationHandler")

@@ -5,8 +5,8 @@ from typing import List
 
 from openai import OpenAI
 
-from openai_client import prompts
-from openai_client.constants import CHAT_GPT_MODEL
+from daily_dragon.openai_client import prompts
+from daily_dragon.openai_client.constants import CHAT_GPT_MODEL
 
 logger = logging.getLogger(__name__)
 

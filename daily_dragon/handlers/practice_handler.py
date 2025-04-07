@@ -4,9 +4,9 @@ import re
 from telegram import Update
 from telegram.ext import ConversationHandler, CommandHandler, ContextTypes, MessageHandler, filters
 
-from openai_client.daily_dragon import DailyDragon
-from handlers.constants import JAPANESE_USER_ID
-from vocabulary.vocabulary import Vocabulary
+from daily_dragon.openai_client.daily_dragon import DailyDragon
+from daily_dragon.handlers.constants import JAPANESE_USER_ID
+from daily_dragon.vocabulary.vocabulary import Vocabulary
 
 WORDS_COUNT_FOR_PRACTICE = 5
 
