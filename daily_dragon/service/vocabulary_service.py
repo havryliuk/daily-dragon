@@ -20,5 +20,5 @@ class VocabularyService:
         vocabulary = self.vocabulary_repository.get_vocabulary()
         if word in vocabulary:
             del vocabulary[word]
-            self.vocabulary_repository.save_vocab(vocabulary)
+            self.vocabulary_repository.save_vocabulary(vocabulary)
         logging.info(f"Deleted word {word}")

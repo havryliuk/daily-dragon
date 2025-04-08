@@ -32,7 +32,7 @@ class VocabularyRepository:
                 logging.error("Error fetching vocabulary file: %s", e)
                 raise
 
-    def save_vocab(self, vocabulary: Dict[str, Dict]):
+    def save_vocabulary(self, vocabulary: Dict[str, Dict]):
         self.s3_client.put_object(
             Bucket=self.bucket_name,
             Key=self.vocabulary_file_key,
@@ -53,6 +53,6 @@ class VocabularyRepository:
 
         vocabulary[word] = word_details
 
-        self.save_vocab(vocabulary)
+        self.save_vocabulary(vocabulary)
 
         logging.info("Word added to vocabulary: %s", word)

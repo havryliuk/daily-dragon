@@ -6,6 +6,7 @@ botocore
 
 pytest
 pytest-cov
+httpx
 
 # for running FastAPI app locally
 uvicorn
