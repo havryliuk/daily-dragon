@@ -1,2 +1,11 @@
+fastapi
+pydantic
+python-dotenv
+boto3
+botocore
+
 pytest
 pytest-cov
+
+# for running FastAPI app locally
+uvicorn
