@@ -1,8 +1,12 @@
+# core daily-dragon dependencies
 fastapi
 pydantic
 python-dotenv
 boto3
 botocore
+
+# for AWS Lambda deployment
+mangum
 
 pytest
 pytest-cov

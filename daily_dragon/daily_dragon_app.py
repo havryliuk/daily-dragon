@@ -19,7 +19,7 @@ class WordEntry(BaseModel):
     word: str
 
 
-@app.post("/vocabulary", status_code=201)
+@app.post("/daily-dragon/vocabulary", status_code=201)
 def add_word(word_entry: WordEntry, vocabulary_service: VocabularyService = Depends()):
     word = word_entry.word
     try:
@@ -29,12 +29,13 @@ def add_word(word_entry: WordEntry, vocabulary_service: VocabularyService = Depe
         raise HTTPException(status_code=409, detail=f"Word {word} already exists")
 
 
-@app.get("/vocabulary")
+@app.get("/daily-dragon/vocabulary")
 def get_vocabulary(vocabulary_service: VocabularyService = Depends()):
     vocabulary = vocabulary_service.get_vocabulary()
     return vocabulary
 
 
-@app.delete("/vocabulary/{word}")
+@app.delete("/daily-dragon/vocabulary/{word}")
 def delete_word(word: str, vocabulary_service: VocabularyService = Depends()):
     vocabulary_service.delete_word(word)
+    return {"message": f"Word {word} deleted"}
