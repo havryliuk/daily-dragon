@@ -12,6 +12,8 @@ from daily_dragon.exceptions import WordAlreadyExistsError
 
 load_dotenv()
 
+logger = logging.getLogger(__name__)
+
 
 class VocabularyRepository:
 
@@ -26,10 +28,10 @@ class VocabularyRepository:
             return json.loads(response['Body'].read().decode())
         except ClientError as e:
             if e.response['Error']['Code'] == 'NoSuchKey':
-                logging.info("Vocabulary file not found, creating a new one.")
+                logger.info("Vocabulary file not found, creating a new one.")
                 return dict()
             else:
-                logging.error("Error fetching vocabulary file: %s", e)
+                logger.error("Error fetching vocabulary file: %s", e)
                 raise
 
     def save_vocabulary(self, vocabulary: Dict[str, Dict]):
@@ -43,7 +45,7 @@ class VocabularyRepository:
         vocabulary = self.get_vocabulary()
 
         if word in vocabulary:
-            logging.info("Word already exists in vocabulary: %s", word)
+            logger.info("Word already exists in vocabulary: %s", word)
             raise WordAlreadyExistsError()
 
         word_details = {
@@ -55,4 +57,4 @@ class VocabularyRepository:
 
         self.save_vocabulary(vocabulary)
 
-        logging.info("Word added to vocabulary: %s", word)
+        logger.info("Word added to vocabulary: %s", word)

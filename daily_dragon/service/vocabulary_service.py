@@ -4,6 +4,7 @@ from fastapi import Depends
 
 from daily_dragon.repository.vocabulary_repository import VocabularyRepository
 
+logger = logging.getLogger(__name__)
 
 class VocabularyService:
 
@@ -21,4 +22,4 @@ class VocabularyService:
         if word in vocabulary:
             del vocabulary[word]
             self.vocabulary_repository.save_vocabulary(vocabulary)
-        logging.info(f"Deleted word {word}")
+        logger.info(f"Deleted word {word}")

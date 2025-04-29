@@ -9,3 +9,8 @@ pip install -r requirements.txt
 ```bash
 pytest --cov=.
 ```
+
+### Run app locally
+```bash
+uvicorn daily_dragon.daily_dragon_app:app --reload
+```
