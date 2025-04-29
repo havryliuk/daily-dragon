@@ -1,0 +1,17 @@
+#from user folder: (cd ~)
+cd ~
+
+# remove any leftover files
+rm -rf python daily_dragon_layer.zip
+
+# install libraries into python folder inside user folder - make sure python is 3.13 and system architecture is x86_64
+pip install --target=python/ -r /mnt/c/Users/Oleksandr_Gavryliuk/IdeaProjects/daily-dragon/requirements.txt
+
+# copy source code for daily-dragon bot to same folder
+cp -r /mnt/c/Users/Oleksandr_Gavryliuk/IdeaProjects/daily-dragon/daily_dragon ~/python/
+
+# zip the python folder
+zip -r9 daily_dragon_layer.zip python/
+
+# copy the archive to windows
+cp daily_dragon_layer.zip /mnt/c/Users/Oleksandr_Gavryliuk/IdeaProjects/daily-dragon
