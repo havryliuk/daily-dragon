@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
-import HomePage from './HomePage.tsx';
+import {ChakraProvider, defaultSystem} from '@chakra-ui/react';
+import Layout from './home.tsx';
 import './index.css';
+import {BrowserRouter} from "react-router";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <ChakraProvider value={defaultSystem}>
-            <HomePage />
-        </ChakraProvider>
+        <BrowserRouter>
+            <ChakraProvider value={defaultSystem}>
+                <Layout/>
+            </ChakraProvider>
+        </BrowserRouter>
     </React.StrictMode>
 );
