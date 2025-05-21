@@ -2,6 +2,7 @@ import logging
 
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
+from starlette.middleware.cors import CORSMiddleware
 
 from daily_dragon.exceptions import WordAlreadyExistsError
 from daily_dragon.service.vocabulary_service import VocabularyService
@@ -13,6 +14,17 @@ logging.basicConfig(
 )
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  # React frontend
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 
 class WordEntry(BaseModel):

@@ -1,10 +1,13 @@
-import { Flex, Text } from '@chakra-ui/react'
+import {Flex, Text} from '@chakra-ui/react'
+import {MainMenu} from "./MainMenu";
 
 export function Header() {
     return (
         <Flex>
-            <Text>🐉</Text>
-            <Text>每日龍</Text>
+            <Flex>
+                <MainMenu/>
+                <Text>每日龍</Text>
+            </Flex>
         </Flex>
     )
 }
