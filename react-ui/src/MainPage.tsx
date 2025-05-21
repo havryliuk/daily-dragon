@@ -1,9 +1,11 @@
-import {Button, Flex} from "@chakra-ui/react";
+import {Flex, Text} from "@chakra-ui/react";
 
 export function MainPage() {
     return (
-        <Flex direction="column">
-            <Button>Practice</Button>
-        </Flex>
+        <main>
+            <Flex direction="column">
+                <Text>Main Page</Text>
+            </Flex>
+        </main>
     )
 }

@@ -6,10 +6,8 @@ export function MainMenu() {
 
     return (
         <Menu.Root>
-            <Menu.Trigger>
-                <Button size="sm" variant="outline">
-                    🐉
-                </Button>
+            <Menu.Trigger asChild>
+                <Button variant="outline">🐉</Button>
             </Menu.Trigger>
             <Portal>
                 <Menu.Positioner>

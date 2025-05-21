@@ -6,8 +6,9 @@ import {Route, Routes} from "react-router-dom";
 
 const App = () => (
     <>
-        <Header/>
-        <MainPage/>
+        <header>
+            <Header/>
+        </header>
         <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/vocabulary" element={<VocabularyPage />} />
