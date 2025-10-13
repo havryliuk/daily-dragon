@@ -6,11 +6,8 @@ from typing import Dict
 
 import boto3
 from botocore.exceptions import ClientError
-from dotenv import load_dotenv
 
 from daily_dragon.exceptions import WordAlreadyExistsError
-
-load_dotenv()
 
 logger = logging.getLogger(__name__)
 

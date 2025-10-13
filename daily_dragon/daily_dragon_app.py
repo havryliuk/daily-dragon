@@ -1,8 +1,10 @@
 import logging
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 
+from daily_dragon.auth.authenticate import authenticate
 from daily_dragon.exceptions import WordAlreadyExistsError
 from daily_dragon.service.vocabulary_service import VocabularyService
 
@@ -12,6 +14,8 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
+load_dotenv()
+
 app = FastAPI()
 
 
@@ -20,7 +24,8 @@ class WordEntry(BaseModel):
 
 
 @app.post("/daily-dragon/vocabulary", status_code=201)
-def add_word(word_entry: WordEntry, vocabulary_service: VocabularyService = Depends()):
+def add_word(word_entry: WordEntry, vocabulary_service: VocabularyService = Depends(),
+             username: str = Depends(authenticate)):
     word = word_entry.word
     try:
         vocabulary_service.add_word(word_entry.word)
@@ -30,12 +35,12 @@ def add_word(word_entry: WordEntry, vocabulary_service: VocabularyService = Depe
 
 
 @app.get("/daily-dragon/vocabulary")
-def get_vocabulary(vocabulary_service: VocabularyService = Depends()):
+def get_vocabulary(vocabulary_service: VocabularyService = Depends(), username: str = Depends(authenticate)):
     vocabulary = vocabulary_service.get_vocabulary()
     return vocabulary
 
 
 @app.delete("/daily-dragon/vocabulary/{word}")
-def delete_word(word: str, vocabulary_service: VocabularyService = Depends()):
+def delete_word(word: str, vocabulary_service: VocabularyService = Depends(), username: str = Depends(authenticate)):
     vocabulary_service.delete_word(word)
     return {"message": f"Word {word} deleted"}
