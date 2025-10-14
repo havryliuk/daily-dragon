@@ -35,7 +35,7 @@ jobs:
           NEW_LAYER_ARN=$(aws lambda publish-layer-version \
             --layer-name daily-dragon-libraries \
             --content S3Bucket=daily-dragon-layer,S3Key=daily_dragon_layer.zip \
-            --compatible-runtimes python3.13
+            --compatible-runtimes python3.13 \
             --query 'LayerVersionArn')
       - name: Update Lambda function configuration with new layer
         run: |
