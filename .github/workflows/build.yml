@@ -41,7 +41,7 @@ jobs:
             --layer-name daily-dragon-libraries \
             --content S3Bucket=daily-dragon-layer,S3Key=daily_dragon_layer.zip \
             --compatible-runtimes python3.13 \
-            --query 'LayerVersionArn')
+            --query 'LayerVersionArn' --output text)
           echo "Published new layer version: $NEW_LAYER_ARN"
           echo "layer_arn=$NEW_LAYER_ARN" >> $GITHUB_ENV
       - name: Update Lambda function configuration with new layer
