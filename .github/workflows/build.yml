@@ -30,10 +30,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Check AWS credentials
         run: aws sts get-caller-identity
-      - run: aws s3 cp daily_dragon_layer.zip s3://YOUR_S3_BUCKET_NAME/daily_dragon_layer.zip
+      - run: aws s3 cp daily_dragon_layer.zip s3://daily-dragon-layer/daily_dragon_layer.zip
       - run: |
           aws lambda publish-layer-version \
-            --layer-name daily_dragon_layer \
-            --description "Your layer description" \
-            --content S3Bucket=YOUR_S3_BUCKET_NAME,S3Key=daily_dragon_layer.zip \
+            --layer-name daily-dragon-libraries \
+            --content S3Bucket=daily-dragon-layer,S3Key=daily_dragon_layer.zip \
             --compatible-runtimes python3.13
