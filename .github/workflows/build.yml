@@ -32,7 +32,7 @@ jobs:
         run: aws sts get-caller-identity
       - run: aws s3 cp daily_dragon_layer.zip s3://daily-dragon-layer/daily_dragon_layer.zip
       - run: |
-          NEW_LAYER_ARN = $(aws lambda publish-layer-version \
+          NEW_LAYER_ARN=$(aws lambda publish-layer-version \
             --layer-name daily-dragon-libraries \
             --content S3Bucket=daily-dragon-layer,S3Key=daily_dragon_layer.zip \
             --compatible-runtimes python3.13
