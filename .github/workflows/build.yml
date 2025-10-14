@@ -48,4 +48,4 @@ jobs:
         run: |
           aws lambda update-function-configuration \
           --function-name daily-dragon \
-          --layers "$layer_arn"
+          --layers $layer_arn
