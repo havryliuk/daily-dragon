@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import secrets
@@ -26,7 +27,8 @@ def get_password():
     password = os.getenv("PASSWORD")
     if not password:
         print("No password provided in the .env file, fetching from AWS Secrets Manager.")
-        password = get_password_from_secrets()["SecretString"]
+        secret_string = get_password_from_secrets()
+        password = json.loads(secret_string)["SecretString"]
         print("Password retrieved from AWS Secrets Manager.")
     return password
 
