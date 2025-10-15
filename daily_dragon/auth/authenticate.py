@@ -26,9 +26,8 @@ def get_password():
     password = os.getenv("PASSWORD")
     if not password:
         print("No password provided in the .env file, fetching from AWS Secrets Manager.")
-        password = get_password_from_secrets()
+        password = get_password_from_secrets()["SecretString"]
         print("Password retrieved from AWS Secrets Manager.")
-        print(password)
     return password
 
 
