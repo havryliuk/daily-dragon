@@ -28,6 +28,7 @@ def get_password():
         print("No password provided in the .env file, fetching from AWS Secrets Manager.")
         password = get_password_from_secrets()
         print("Password retrieved from AWS Secrets Manager.")
+        print(password)
     return password
 
 
