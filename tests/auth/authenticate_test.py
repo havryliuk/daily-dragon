@@ -43,13 +43,13 @@ def test_get_password_uses_env(monkeypatch):
 
 def test_get_password_uses_secrets(monkeypatch, mock_boto3_client):
     monkeypatch.delenv("PASSWORD", raising=False)
-    stub_secret = "itsasecret"
+    stub_secret = {"SecretString": "itsasecret"}
     mock_secrets_manager = mock.Mock()
     mock_secrets_manager.get_secret_value.return_value = {"SecretString": stub_secret}
     mock_boto3_client.return_value = mock_secrets_manager
 
     out = get_password()
-    assert out == stub_secret
+    assert out == "itsasecret"
 
 def test_authenticate_success(monkeypatch):
     monkeypatch.setenv("PASSWORD", "pw")
