@@ -54,7 +54,7 @@ def test_get_password_uses_secrets(monkeypatch, mock_boto3_client):
 def test_authenticate_success(monkeypatch):
     monkeypatch.setenv("PASSWORD", "pw")
     creds = HTTPBasicCredentials(username="havryliuk", password="pw")
-    # simulate FastAPI Depends usage by calling directly
+
     result = authenticate(creds)
     assert result == "havryliuk"
 
