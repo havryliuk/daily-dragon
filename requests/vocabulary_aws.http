@@ -1,8 +1,10 @@
 ###
 GET https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabulary
+Authorization: Basic havryliuk <password>
 
 ###
 POST https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabulary
+Authorization: Basic havryliuk <password>
 
 {
     "word": "你好"
@@ -10,3 +12,4 @@ POST https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabul
 
 ###
 DELETE https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabulary/%E4%BD%A0%E5%A5%BD
+Authorization: Basic havryliuk <password>
