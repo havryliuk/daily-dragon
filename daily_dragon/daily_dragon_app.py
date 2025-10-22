@@ -47,5 +47,8 @@ def delete_word(word: str, vocabulary_service: VocabularyService = Depends(), us
 
 
 @app.options("/daily-dragon/vocabulary")
-def options_vocabulary():
+def options_vocabulary(response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "http://localhost:5173"
+    response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
     return Response(status_code=200)
