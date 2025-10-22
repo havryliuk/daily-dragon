@@ -16,7 +16,7 @@ function App() {
 
         fetch(VOCABULARY_URL, {headers})
             .then(res => res.json())
-            .then(data => setItems(data.items)); // adjust according to your API response
+            .then(data => setItems(Object.keys(data)));
     }, []);
 
     return (
