@@ -3,6 +3,7 @@ import logging
 from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
+from starlette.middleware.cors import CORSMiddleware
 
 from daily_dragon.auth.authenticate import authenticate
 from daily_dragon.exceptions import WordAlreadyExistsError
@@ -18,6 +19,17 @@ load_dotenv()
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"]
+)
 
 class WordEntry(BaseModel):
     word: str
