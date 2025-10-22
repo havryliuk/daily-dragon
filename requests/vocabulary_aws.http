@@ -3,6 +3,9 @@ GET https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabula
 Authorization: Basic havryliuk <password>
 
 ###
+OPTIONS http://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabulary
+
+###
 POST https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabulary
 Authorization: Basic havryliuk <password>
 
