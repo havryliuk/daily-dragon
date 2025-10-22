@@ -3,6 +3,9 @@ GET http://127.0.0.1:8000/daily-dragon/vocabulary
 Authorization: Basic havryliuk <password>
 
 ###
+OPTIONS http://127.0.0.1:8000/daily-dragon/vocabulary
+
+###
 POST http://127.0.0.1:8000/daily-dragon/vocabulary
 Authorization: Basic havryliuk <password>
 

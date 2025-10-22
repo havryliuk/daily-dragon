@@ -1,7 +1,7 @@
 import logging
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Response
 from pydantic import BaseModel
 
 from daily_dragon.auth.authenticate import authenticate
@@ -44,3 +44,8 @@ def get_vocabulary(vocabulary_service: VocabularyService = Depends(), username: 
 def delete_word(word: str, vocabulary_service: VocabularyService = Depends(), username: str = Depends(authenticate)):
     vocabulary_service.delete_word(word)
     return {"message": f"Word {word} deleted"}
+
+
+@app.options("/daily-dragon/vocabulary")
+def options_vocabulary():
+    return Response(status_code=200)
