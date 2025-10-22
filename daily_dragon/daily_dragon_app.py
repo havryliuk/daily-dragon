@@ -2,6 +2,7 @@ import logging
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, HTTPException, Response
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from daily_dragon.auth.authenticate import authenticate
@@ -17,6 +18,12 @@ logging.basicConfig(
 load_dotenv()
 
 app = FastAPI()
+app.add_middleware(CORSMiddleware,
+                   allow_origins=["http://localhost:5173"],
+                   allow_credentials=True,
+                   allow_methods=["GET", "POST", "OPTIONS"],
+                   allow_headers=["Authorization", "Content-Type"]
+                   )
 
 
 class WordEntry(BaseModel):
@@ -47,8 +54,5 @@ def delete_word(word: str, vocabulary_service: VocabularyService = Depends(), us
 
 
 @app.options("/daily-dragon/vocabulary")
-def options_vocabulary(response: Response):
-    response.headers["Access-Control-Allow-Origin"] = "http://localhost:5173"
-    response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+def options_vocabulary():
     return Response(status_code=200)
