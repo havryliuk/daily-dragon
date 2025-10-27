@@ -1,6 +1,7 @@
 import './App.css'
 import {VocabularyList} from "./components/vocabulary/VocabularyList.jsx";
 import {useEffect, useState} from "react";
+import {AddWordButton} from "./components/vocabulary/AddWordButton.jsx";
 
 function App() {
 
@@ -21,8 +22,11 @@ function App() {
 
     return (
         <>
-            <h1>每日龙</h1>
-            <VocabularyList items={items}/>
+            <div className="centered">
+                <h1>每日龙</h1>
+                <AddWordButton />
+                <VocabularyList items={items}/>
+            </div>
         </>
     )
 }
