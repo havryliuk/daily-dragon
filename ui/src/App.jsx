@@ -1,18 +1,23 @@
 import './App.css'
+import {Route, Routes} from 'react-router-dom'
 import {VocabularyList} from "./components/vocabulary/VocabularyList.jsx";
 import {useEffect, useState} from "react";
 import {AddWordDialog} from "./components/vocabulary/AddWordDialog.jsx";
 import {fetchVocabulary} from "./services/vocabularyService.js";
+import Practice from "./components/practice/Practice.jsx";
+import {Heading, Spinner} from "@chakra-ui/react";
 
 function App() {
 
-    const VOCABULARY_URL = 'https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabulary'
-
     const [items, setItems] = useState([]);
+    const [loadingVocabulary, setLoadingVocabulary] = useState(true);
 
     useEffect(() => {
         fetchVocabulary()
-            .then(setItems)
+            .then(vocabulary => {
+                setItems(vocabulary);
+                setLoadingVocabulary(false);
+            })
             .catch(err => {
                 // Handle error (show message, etc.)
                 console.error(err);
@@ -22,9 +27,19 @@ function App() {
     return (
         <>
             <div className="centered">
-                <h1>每日龙</h1>
-                <AddWordDialog />
-                <VocabularyList items={items}/>
+                <Heading>每日龙</Heading>
+                <Routes>
+                    <Route path="/vocabulary" element={
+                        <>
+                            <AddWordDialog/>
+                            {
+                                loadingVocabulary ? (<Spinner/>) :
+                                    (<VocabularyList items={items}/>)
+                            }
+                        </>
+                    }/>
+                    <Route path="/practice" element={<Practice/>}/>
+                </Routes>
             </div>
         </>
     )
