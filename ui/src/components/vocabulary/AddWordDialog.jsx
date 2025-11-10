@@ -1,7 +1,8 @@
 import {Button, CloseButton, Dialog, Input, useDialogContext} from "@chakra-ui/react"
 import {useState} from "react";
+import {addWord} from "../../services/vocabularyService.js";
 
-function AddWordDialogContent({ word, setWord, loading, setLoading }) {
+function AddWordDialogContent({word, setWord, loading, setLoading}) {
     const dialog = useDialogContext();
 
     const handleSave = async () => {
@@ -9,14 +10,10 @@ function AddWordDialogContent({ word, setWord, loading, setLoading }) {
         if (!trimmedWord) return;
         setLoading(true);
         try {
-            const response = await fetch("/api/words", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ word: trimmedWord }),
-            });
+            const response = await addWord(trimmedWord);
             if (response.ok) {
-                setWord("");
                 dialog.onClose(); // closes dialog!
+                setWord("");
             } else {
                 // handle error
             }
@@ -29,7 +26,7 @@ function AddWordDialogContent({ word, setWord, loading, setLoading }) {
     return (
         <>
             <Dialog.CloseTrigger asChild>
-                <CloseButton />
+                <CloseButton/>
             </Dialog.CloseTrigger>
             <Dialog.Header>
                 <Dialog.Title>Add New Word</Dialog.Title>
@@ -64,7 +61,7 @@ export function AddWordDialog() {
             <Dialog.Trigger asChild>
                 <Button title="Add new word">+</Button>
             </Dialog.Trigger>
-            <Dialog.Backdrop />
+            <Dialog.Backdrop/>
             <Dialog.Positioner>
                 <Dialog.Content>
                     <AddWordDialogContent

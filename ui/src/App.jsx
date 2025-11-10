@@ -2,6 +2,7 @@ import './App.css'
 import {VocabularyList} from "./components/vocabulary/VocabularyList.jsx";
 import {useEffect, useState} from "react";
 import {AddWordDialog} from "./components/vocabulary/AddWordDialog.jsx";
+import {fetchVocabulary} from "./services/vocabularyService.js";
 
 function App() {
 
@@ -10,14 +11,12 @@ function App() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        const username = 'havryliuk';
-        const password = 'juswenko';
-        const headers = new Headers();
-        headers.set('Authorization', 'Basic ' + btoa(username + ':' + password));
-
-        fetch(VOCABULARY_URL, {headers})
-            .then(res => res.json())
-            .then(data => setItems(Object.keys(data)));
+        fetchVocabulary()
+            .then(setItems)
+            .catch(err => {
+                // Handle error (show message, etc.)
+                console.error(err);
+            });
     }, []);
 
     return (
