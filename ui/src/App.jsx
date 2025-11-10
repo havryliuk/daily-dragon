@@ -1,7 +1,7 @@
 import './App.css'
 import {VocabularyList} from "./components/vocabulary/VocabularyList.jsx";
 import {useEffect, useState} from "react";
-import {AddWordButton} from "./components/vocabulary/AddWordButton.jsx";
+import {AddWordDialog} from "./components/vocabulary/AddWordDialog.jsx";
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
 
     useEffect(() => {
         const username = 'havryliuk';
-        const password = '*****';
+        const password = 'juswenko';
         const headers = new Headers();
         headers.set('Authorization', 'Basic ' + btoa(username + ':' + password));
 
@@ -24,7 +24,7 @@ function App() {
         <>
             <div className="centered">
                 <h1>每日龙</h1>
-                <AddWordButton />
+                <AddWordDialog />
                 <VocabularyList items={items}/>
             </div>
         </>
