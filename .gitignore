@@ -6,3 +6,6 @@ venv
 .env
 
 .coverage
+
+node_modules
+.vite
