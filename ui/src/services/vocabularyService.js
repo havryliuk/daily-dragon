@@ -1,6 +1,6 @@
 const VOCABULARY_URL = 'https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/vocabulary';
 const USERNAME = 'havryliuk';
-const PASSWORD = 'juswenko';
+const PASSWORD = '********';
 const BASIC_AUTH = 'Basic ' + btoa(USERNAME + ':' + PASSWORD);
 
 export async function fetchVocabulary() {
