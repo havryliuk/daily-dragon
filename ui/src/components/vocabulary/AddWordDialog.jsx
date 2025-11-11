@@ -1,3 +1,5 @@
+import React from "react";
+
 import {Button, CloseButton, Dialog, Input, useDialogContext} from "@chakra-ui/react"
 import {useState} from "react";
 import {addWord} from "../../services/vocabularyService.js";
@@ -12,7 +14,7 @@ function AddWordDialogContent({word, setWord, loading, setLoading}) {
         try {
             const response = await addWord(trimmedWord);
             if (response.ok) {
-                dialog.onClose(); // closes dialog!
+                dialog.onClose();
                 setWord("");
             } else {
                 // handle error
