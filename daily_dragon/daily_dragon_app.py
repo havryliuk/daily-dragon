@@ -1,7 +1,8 @@
 import logging
+from typing import Optional
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Depends, HTTPException, Response
+from fastapi import FastAPI, Depends, HTTPException, Response, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -42,8 +43,12 @@ def add_word(word_entry: WordEntry, vocabulary_service: VocabularyService = Depe
 
 
 @app.get("/daily-dragon/vocabulary")
-def get_vocabulary(vocabulary_service: VocabularyService = Depends(), username: str = Depends(authenticate)):
-    vocabulary = vocabulary_service.get_vocabulary()
+def get_vocabulary(vocabulary_service: VocabularyService = Depends(), username: str = Depends(authenticate),
+                   count: Optional[int] = Query(None, gt=0)):
+    if count is not None:
+        vocabulary = vocabulary_service.get_random_vocabulary(count)
+    else:
+        vocabulary = vocabulary_service.get_vocabulary()
     return vocabulary
 
 
