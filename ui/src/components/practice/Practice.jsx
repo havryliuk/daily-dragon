@@ -12,14 +12,21 @@ const STATES = {
 
 export default function Practice() {
     const [state, setState] = useState(STATES.WELCOME);
+    const [reviewResult, setReviewResult] = useState(null);
 
     const startPractice = () => setState(STATES.IN_PROGRESS);
-    const goToReview = () => setState(STATES.REVIEW);
-    const finishPractice = () => setState(STATES.WELCOME);
+    const goToReview = (reviewData) => {
+        setReviewResult(reviewData);
+        setState(STATES.REVIEW);
+    }
+    const finishPractice = () => {
+        setReviewResult(null);
+        setState(STATES.WELCOME);
+    }
 
     return <Box>
-        {state === STATES.WELCOME && <WelcomePage onStart={startPractice} />}
-        {state === STATES.IN_PROGRESS && <PracticePage onReview={goToReview} />}
-        {state === STATES.REVIEW && <ReviewPage onFinish={finishPractice} />}
+        {state === STATES.WELCOME && <WelcomePage onStart={startPractice}/>}
+        {state === STATES.IN_PROGRESS && <PracticePage onReview={goToReview}/>}
+        {state === STATES.REVIEW && <ReviewPage onFinish={finishPractice} review={reviewResult}/>}
     </Box>
 }

@@ -1,4 +1,4 @@
-import {GET_SENTENCES_PROMPT} from "./prompts.js";
+import {EVALUATE_TRANSLATIONS_PROMPT, GET_SENTENCES_PROMPT} from "./prompts.js";
 
 const AI_SERVICE_URL = "https://c0ouez95i5.execute-api.us-west-2.amazonaws.com/daily-dragon/openai";
 
@@ -14,7 +14,30 @@ export async function getPracticeSentences(words) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ prompt })
+        body: JSON.stringify({prompt})
+    });
+
+    if (!response.ok) {
+        throw new Error(`API error: ${response.statusText}`);
+    }
+
+    return await response.json();
+}
+
+export async function submitTranslations({words, sentences, translations}) {
+    const prompt = EVALUATE_TRANSLATIONS_PROMPT +
+        sentences.map((sentence, index) => {
+            return `${index+1}. Sentence: "${sentence}"\n` +
+                `User Translation: "${translations[index]}"\n` +
+                `Target Word: "${words[index]}"\n`;
+        }).join("\n");
+
+    const response = await fetch(AI_SERVICE_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({prompt})
     });
 
     if (!response.ok) {
