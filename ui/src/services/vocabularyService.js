@@ -3,16 +3,24 @@ const USERNAME = 'havryliuk';
 const PASSWORD = '********';
 const BASIC_AUTH = 'Basic ' + btoa(USERNAME + ':' + PASSWORD);
 
-export async function fetchVocabulary() {
+const fetchVocabularyData = async (url) => {
     const headers = new Headers();
     headers.set('Authorization', BASIC_AUTH);
 
-    const response = await fetch(VOCABULARY_URL, {headers});
+    const response = await fetch(url, {headers});
     if (!response.ok) {
-        throw new Error('Failed to fetch vocabulary');
+        throw new Error('Failed to fetch vocabulary data');
     }
     const data = await response.json();
     return Object.keys(data);
+};
+
+export async function fetchVocabulary() {
+    return fetchVocabularyData(VOCABULARY_URL);
+}
+
+export async function getRandomNWords(n) {
+    return fetchVocabularyData(`${VOCABULARY_URL}?count=${n}`);
 }
 
 export async function addWord(trimmedWord) {

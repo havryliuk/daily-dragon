@@ -1,7 +1,7 @@
 import {Box} from "@chakra-ui/react";
 import {useState} from "react";
 import WelcomePage from "./WelcomePage.jsx";
-import PracticePage from "./PracticePage.jsx";
+import {PracticePage} from "./PracticePage.jsx";
 import ReviewPage from "./ReviewPage.jsx";
 
 const STATES = {
